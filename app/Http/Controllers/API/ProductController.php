@@ -18,8 +18,8 @@ class ProductController extends BaseController
      */
     public function index(): JsonResponse
     {
+        dd("Hii");
         $products = Product::all();
-
         return $this->sendResponse(ProductResource::collection($products), 'Products retrieved successfully.');
     }
 
@@ -35,6 +35,7 @@ class ProductController extends BaseController
 
         $validator = Validator::make($input, [
             'name' => 'required',
+            'user_id' => 'required',
             'detail' => 'required'
         ]);
 

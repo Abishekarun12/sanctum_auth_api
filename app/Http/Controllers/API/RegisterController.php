@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
+use App\Models\Product;
 use App\Models\User;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
@@ -49,8 +51,13 @@ class RegisterController extends BaseController
             $user = Auth::user();
             $success['token'] =  $user->createToken('MyApp')->plainTextToken;
             $success['name'] =  $user->name;
-
-            return $this->sendResponse($success, 'User login successfully.');
+            $products = Product::where('user_id', $user->id)->get();
+            return response()->json(
+                [
+                    'message' => $user->name . " " . "Loggged In Successfully!",
+                    'products' => $products
+                ]
+            );
         }
         else{
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
