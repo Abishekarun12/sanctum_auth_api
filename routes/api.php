@@ -13,5 +13,7 @@ Route::controller(RegisterController::class)->group(function(){
 });
 
 Route::middleware('auth:sanctum')->group( function () {
-    Route::resource('products', ProductController::class);
+    Route::get('/products',[ProductController::class,'index'])->name('products.index');
+    Route::post('/products/store',[ProductController::class,'store'])->name('products.store');
+    // Route::resource('products', ProductController::class);
 });

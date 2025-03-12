@@ -55,6 +55,7 @@ class RegisterController extends BaseController
             return response()->json(
                 [
                     'message' => $user->name . " " . "Loggged In Successfully!",
+                    'token' => $success['token'],
                     'products' => $products
                 ]
             );

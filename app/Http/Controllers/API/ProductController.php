@@ -7,6 +7,7 @@ use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Product;
 use App\Http\Resources\ProductResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends BaseController
@@ -16,10 +17,10 @@ class ProductController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        dd("Hii");
-        $products = Product::all();
+        $user_id = $request->query('user_id');
+        $products = Product::where(['user_id' => $user_id])->get();
         return $this->sendResponse(ProductResource::collection($products), 'Products retrieved successfully.');
     }
 
